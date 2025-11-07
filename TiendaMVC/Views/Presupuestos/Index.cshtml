@@ -1,0 +1,36 @@
+@using Tienda.Models
+@model List<Presupuesto>
+
+<h2>Presupuesto List</h2>
+<button>
+<a class="btn btn-primary" asp-controller="Presupuestos" asp-action="CrearPresupuesto" >Crear Presupuesto</a>
+</button>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th hidden>ID</th>
+            <th>Nombre Destinatario</th>
+            <th>Fecha Creacion</th>
+            <th>Detalle</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Presupuesto presupuesto in Model)
+        {
+            <tr>
+                <td hidden>@presupuesto.IdPresupuesto</td>
+                <td>@presupuesto.NombreDestinatario</td>
+                <td>@presupuesto.FechaCreacion.ToShortDateString()</td>
+                <td class="text-center">
+                    <a asp-controller="Presupuestos" asp-action="Details" asp-route-idPresupuesto="@presupuesto.IdPresupuesto" class="btn btn-secondary">Ver Detalle</a>
+                </td>
+                <td class="text-center">
+                    <a asp-controller="Presupuestos" asp-action="EditarPresupuesto" asp-route-idPresupuesto="@presupuesto.IdPresupuesto" class="btn btn-warning">Editar</a>
+                    <a asp-controller="Presupuestos" asp-action="DeletePresupuesto" asp-route-idPresupuesto="@presupuesto.IdPresupuesto" class="btn btn-danger">Eliminar</a>
+            </td>
+            </tr>
+                
+        }
+    </tbody>
+</table>

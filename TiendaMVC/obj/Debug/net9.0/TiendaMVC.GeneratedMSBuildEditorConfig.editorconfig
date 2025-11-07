@@ -1,0 +1,81 @@
+is_global = true
+build_property.TargetFramework = net9.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = TiendaMVC
+build_property.RootNamespace = TiendaMVC
+build_property.ProjectDir = /mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = /mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 9.0
+build_property.EnableCodeStyleSeverity = 
+
+[/mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/Views/Presupuestos/AgregarProducto.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJlc3VwdWVzdG9zL0FncmVnYXJQcm9kdWN0by5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/Views/Presupuestos/CrearPresupuesto.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJlc3VwdWVzdG9zL0NyZWFyUHJlc3VwdWVzdG8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/Views/Presupuestos/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJlc3VwdWVzdG9zL0RldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/Views/Presupuestos/EditarPresupuesto.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJlc3VwdWVzdG9zL0VkaXRhclByZXN1cHVlc3RvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/Views/Presupuestos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJlc3VwdWVzdG9zL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/Views/Productos/CrearProducto.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZHVjdG9zL0NyZWFyUHJvZHVjdG8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/Views/Productos/EditarProducto.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZHVjdG9zL0VkaXRhclByb2R1Y3RvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/Views/Productos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZHVjdG9zL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-jj05642qsp

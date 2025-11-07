@@ -1,0 +1,73 @@
+@using Tienda.Models
+@model Presupuesto
+
+<h2>Presupuesto</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th hidden>ID</th>
+            <th>Nombre Destinatario</th>
+            <th>Fecha Creacion</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td hidden>@Model.IdPresupuesto</td>
+            <td>@Model.NombreDestinatario</td>
+            <td>@Model.FechaCreacion.ToShortDateString()</td>
+        </tr>
+
+
+    </tbody>
+</table>
+<h2>Detalles</h2>
+<button>
+<a class="btn btn-primary" asp-controller="Presupuestos" asp-action="AgregarProducto" asp-route-idPresupuesto="@Model.IdPresupuesto" >Agregar Producto </a>
+</button>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model.Detalle == null)
+        {
+
+            <td colspan="4" class="text-danger">Error: Producto no encontrado.</td>
+        }
+        else
+        {
+            foreach (var item in Model.Detalle)
+            {
+                <tr>
+                    
+                    <td>@item.Producto?.Descripcion</td>
+                    <td>@item.Cantidad</td>
+                    <td>@item.Producto?.Precio.ToString("C")</td>
+                    <td>@(item.Producto?.Precio * item.Cantidad)</td>
+                </tr>
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-end bg-secondary" ><strong>Total Productos:</strong></td>
+            <td><strong>@Model.CantidadProducto()</strong></td>
+        </tr>
+        <tr>
+            <td colspan="3" class="text-end bg-info"><strong>Subtotal:</strong></td>
+            <td><strong>@Model.montoPresupuesto().ToString("C")</strong></td>
+        </tr>
+        <tr>
+            <td colspan="3" class="text-end bg-success"><strong>Total (con IVA):</strong></td>
+            <td><strong>@Model.MontoPresupuestoConIva().ToString("C")</strong></td>
+        </tr>
+    </tfoot>
+</table>

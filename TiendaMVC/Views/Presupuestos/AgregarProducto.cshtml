@@ -1,0 +1,29 @@
+@model Tienda.Models.PresupuestosDetalle
+
+<h2>Agregar Producto al Presupuesto</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AgregarProducto" asp-route-idPresupuesto="@ViewBag.IdPresupuesto" method="post">
+
+            <div class="form-group">
+                <label asp-for="Producto.IdProducto" class="control-label">ID del Producto</label>
+                <input asp-for="Producto.IdProducto" class="form-control" type="number" />
+                <span asp-validation-for="Producto.IdProducto" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Cantidad" class="control-label"></label>
+                <input asp-for="Cantidad" class="form-control" type="number" />
+                <span asp-validation-for="Cantidad" class="text-danger"></span>
+            </div>
+
+            <br />
+            <div class="form-group mt-2">
+                <button type="submit" class="btn btn-primary">Modificar</button>
+                <button><a asp-action="Details" asp-route-idPresupuesto="@ViewBag.IdPresupuesto" class="btn btn-secondary">Volver</a></button>
+            </div>
+        </form>
+    </div>
+</div>

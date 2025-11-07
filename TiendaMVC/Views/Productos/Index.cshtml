@@ -1,0 +1,31 @@
+@using Tienda.Models
+@model List<Producto>
+
+<h2>Product List</h2>
+<button>
+<a class="btn btn-primary" asp-controller="Productos" asp-action="CrearProducto" >Crear Producto</a>
+</button>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th hidden>ID</th>
+            <th>Descripcion</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Producto producto in Model)
+        {
+            <tr>
+                <td hidden>@producto.IdProducto</td>
+                <td>@producto.Descripcion</td>
+                <td>$@producto.Precio</td>
+                <td class="text-center">
+                     <a asp-controller="Productos" asp-action="EditarProducto" asp-route-idProducto="@producto.IdProducto" class="btn btn-warning">Editar</a>
+                    <a asp-controller="Productos" asp-action="DeleteProducto" asp-route-idProducto="@producto.IdProducto" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

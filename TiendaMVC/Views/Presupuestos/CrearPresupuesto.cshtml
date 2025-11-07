@@ -1,0 +1,23 @@
+@using Tienda.Models
+@model Presupuesto
+
+<form asp-controller="Presupuestos" asp-action="CrearPresupuesto"  class="form-horizontal">
+    <div class="form-group">
+        <label asp-for="@Model.NombreDestinatario">Nombre del destinatario</label>
+        <input asp-for="@Model.NombreDestinatario" class="form-control" />
+        <span asp-validation-for="@Model.NombreDestinatario" class="text-danger"></span>    
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.FechaCreacion">Fecha Creacion</label>
+        <input asp-for="@Model.FechaCreacion" class="form-control" />
+        <span asp-validation-for="@Model.FechaCreacion" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-2">
+        <button type="submit" class="btn btn-primary">Modificar</button>
+        <button><a asp-action="Index" class="btn btn-secondary">Volver</a></button>
+    </div>
+</form>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }
+

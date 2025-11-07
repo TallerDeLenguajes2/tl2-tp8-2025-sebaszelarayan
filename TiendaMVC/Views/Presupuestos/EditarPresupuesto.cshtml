@@ -1,0 +1,31 @@
+@using Tienda.Models
+@model Presupuesto
+
+<form asp-action="EditarPresupuesto" method="post" class="form-horizontal" class="form-horizontal">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group" hidden>
+        <label asp-for="@Model.IdPresupuesto" class="control-label"></label>
+        <input asp-for="@Model.IdPresupuesto" class="form-control" />
+        <span asp-validation-for="@Model.IdPresupuesto" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.NombreDestinatario">Nombre del destinatario</label>
+        <input asp-for="@Model.NombreDestinatario" class="form-control" />
+        <span asp-validation-for="@Model.NombreDestinatario" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.FechaCreacion">Fecha Creacion</label>
+        <input asp-for="@Model.FechaCreacion" class="form-control" />
+        <span asp-validation-for="@Model.FechaCreacion" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-2">
+        <button type="submit" class="btn btn-primary">Modificar</button>
+        <button><a asp-action="Index" class="btn btn-secondary">Volver</a></button>
+    </div>
+</form>
+
+<partial name="_ValidationScriptsPartial" />

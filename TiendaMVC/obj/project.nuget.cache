@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "bWTC76cXDyA=",
+  "success": true,
+  "projectFilePath": "/mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/TiendaMVC.csproj",
+  "expectedPackageFiles": [
+    "/home/Sebastian_Zelarayan/.nuget/packages/microsoft.data.sqlite/9.0.10/microsoft.data.sqlite.9.0.10.nupkg.sha512",
+    "/home/Sebastian_Zelarayan/.nuget/packages/microsoft.data.sqlite.core/9.0.10/microsoft.data.sqlite.core.9.0.10.nupkg.sha512",
+    "/home/Sebastian_Zelarayan/.nuget/packages/sqlitepclraw.bundle_e_sqlite3/2.1.10/sqlitepclraw.bundle_e_sqlite3.2.1.10.nupkg.sha512",
+    "/home/Sebastian_Zelarayan/.nuget/packages/sqlitepclraw.core/2.1.10/sqlitepclraw.core.2.1.10.nupkg.sha512",
+    "/home/Sebastian_Zelarayan/.nuget/packages/sqlitepclraw.lib.e_sqlite3/2.1.10/sqlitepclraw.lib.e_sqlite3.2.1.10.nupkg.sha512",
+    "/home/Sebastian_Zelarayan/.nuget/packages/sqlitepclraw.provider.e_sqlite3/2.1.10/sqlitepclraw.provider.e_sqlite3.2.1.10.nupkg.sha512",
+    "/home/Sebastian_Zelarayan/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512"
+  ],
+  "logs": []
+}
