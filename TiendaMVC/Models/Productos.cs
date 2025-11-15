@@ -1,14 +1,28 @@
-namespace  Tienda.Models;
+using TiendaMVC.ViewModel;
+
+namespace TiendaMVC.Models;
+
 public class Producto
 {
-    private int idProducto;
+    private int id;
     private string? descripcion;
-    private double precio;
+    private decimal precio;
 
     public Producto()
     {
     }
-    public double Precio { get => precio; set => precio = value; }
-    public int IdProducto { get => idProducto; set => idProducto = value; }
+    public Producto(CrearProductoViewModel productoViewModel)
+    {
+        descripcion = productoViewModel.Descripcion;
+        precio = productoViewModel.Precio;
+    }
+    public Producto(EditarProductoViewModel productoViewModel)
+    {
+        id = productoViewModel.Id;
+        descripcion = productoViewModel.Descripcion;
+        precio = productoViewModel.Precio;
+    }
+    public decimal Precio { get => precio; set => precio = value; }
+    public int Id { get => id; set => id = value; }
     public string? Descripcion { get => descripcion; set => descripcion = value; }
 }

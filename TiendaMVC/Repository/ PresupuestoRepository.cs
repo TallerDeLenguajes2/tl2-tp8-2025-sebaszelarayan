@@ -1,6 +1,6 @@
-using Tienda.Models;
+using TiendaMVC.Models;
 using Microsoft.Data.Sqlite;
-namespace Tienda.Repository;
+namespace TiendaMVC.Repository;
 
 public class PresupuestosRepository
 {
@@ -19,7 +19,7 @@ public class PresupuestosRepository
         _presupuestos.Add(presupuesto);
         connection.Close();
     }
-    public List<Presupuesto> ListarPresupuestos()
+    public List<Presupuesto> GetAll()
     {
         string query = "SELECT * FROM presupuestos";
         var connection = new SqliteConnection(cadenaConnection);
@@ -30,7 +30,7 @@ public class PresupuestosRepository
         {
             var presupuesto = new Presupuesto
             {
-                IdPresupuesto = Convert.ToInt32(reader["idPresupuesto"]),
+                Id = Convert.ToInt32(reader["idPresupuesto"]),
                 NombreDestinatario = reader["NombreDestinatario"].ToString(),
                 FechaCreacion = Convert.ToDateTime(reader["FechaCreacion"])
             };
@@ -44,19 +44,19 @@ public class PresupuestosRepository
 
         Presupuesto? presupuesto = null;
 
-        string query = "SELECT * FROM presupuestos WHERE idPresupuesto=@idPresupuesto";
+        string query = "SELECT * FROM presupuestos WHERE idPresupuesto=@id";
         var connection = new SqliteConnection(cadenaConnection);
         connection.Open();
 
         var command = new SqliteCommand(query, connection);
-        command.Parameters.AddWithValue("@idPresupuesto", id);
+        command.Parameters.AddWithValue("@id", id);
 
         var reader = command.ExecuteReader();
         if (reader.Read())
         {
             presupuesto = new Presupuesto
             {
-                IdPresupuesto = Convert.ToInt32(reader["idPresupuesto"]),
+                Id = Convert.ToInt32(reader["idPresupuesto"]),
                 NombreDestinatario = reader["NombreDestinatario"].ToString(),
                 FechaCreacion = Convert.ToDateTime(reader["FechaCreacion"])
             };
@@ -78,9 +78,9 @@ public class PresupuestosRepository
             {
                 var producto = new Producto
                 {
-                    IdProducto = Convert.ToInt32(readerDetalle["idProducto"]),
+                    Id = Convert.ToInt32(readerDetalle["idProducto"]),
                     Descripcion = readerDetalle["descripcion"].ToString(),
-                    Precio = Convert.ToDouble(readerDetalle["precio"])
+                    Precio = Convert.ToDecimal(readerDetalle["precio"])
                 };
 
                 var detalle = new PresupuestosDetalle
@@ -101,9 +101,9 @@ public class PresupuestosRepository
 
         using var connection = new SqliteConnection(cadenaConnection);
         connection.Open();
-        string sql = "DELETE FROM presupuestos WHERE idPresupuesto = @idPresupuesto;";
+        string sql = "DELETE FROM presupuestos WHERE idPresupuesto = @id;";
         using var command = new SqliteCommand(sql, connection);
-        command.Parameters.Add(new SqliteParameter("@idPresupuesto", id));
+        command.Parameters.Add(new SqliteParameter("@id", id));
         command.ExecuteNonQuery();
         connection.Close();
         return true;
@@ -113,13 +113,12 @@ public class PresupuestosRepository
     public void AgregarProducto(int idPresupuesto, PresupuestosDetalle detalle)
     {
         // Verificamos que el objeto producto no sea nulo y tenga un ID válido.
-        if (detalle.Producto == null || detalle.Producto.IdProducto <= 0)
+        if (detalle.Producto == null || detalle.Producto.Id <= 0)
         {
             throw new ArgumentException("El producto proporcionado no es válido o no tiene un ID.");
         }
 
-        string query = @"INSERT INTO PresupuestosDetalle (idPresupuesto, idProducto, cantidad) 
-                     VALUES (@idPresupuesto, @idProducto, @cantidad);";
+        string query = @"INSERT INTO PresupuestosDetalle (idPresupuesto, idProducto, cantidad) VALUES (@id, @idProducto, @cantidad);";
 
         using (var connection = new SqliteConnection(cadenaConnection))
         {
@@ -128,9 +127,9 @@ public class PresupuestosRepository
 
             // Aquí está la "traducción":
             // 1. Tomamos el idPresupuesto que viene como parámetro.
-            command.Parameters.AddWithValue("@idPresupuesto", idPresupuesto);
+            command.Parameters.AddWithValue("@id", idPresupuesto);
             // 2. Extraemos el idProducto desde el objeto 'producto' dentro de 'detalle'.
-            command.Parameters.AddWithValue("@idProducto", detalle.Producto.IdProducto);
+            command.Parameters.AddWithValue("@idProducto", detalle.Producto.Id);
             // 3. Tomamos la cantidad directamente de 'detalle'.
             command.Parameters.AddWithValue("@cantidad", detalle.Cantidad);
 
@@ -138,7 +137,7 @@ public class PresupuestosRepository
             connection.Close();
         }
     }
-     public void Modificar(Presupuesto presupuesto)
+    public void Modificar(Presupuesto presupuesto)
     {
 
         using var connection = new SqliteConnection(cadenaConnection);
@@ -148,7 +147,7 @@ public class PresupuestosRepository
 
         command.Parameters.Add(new SqliteParameter("@NombreDestinatario", presupuesto.NombreDestinatario));
         command.Parameters.Add(new SqliteParameter("@fecha", presupuesto.FechaCreacion));
-        command.Parameters.Add(new SqliteParameter("@id", presupuesto.IdPresupuesto));
+        command.Parameters.Add(new SqliteParameter("@id", presupuesto.Id));
 
         command.ExecuteNonQuery();
         connection.Close();

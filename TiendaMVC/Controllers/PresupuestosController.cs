@@ -1,28 +1,35 @@
 using Microsoft.AspNetCore.Mvc;
-using Tienda.Models;
-using Tienda.Repository;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using TiendaMVC.Models;
+using TiendaMVC.Repository;
+using TiendaMVC.ViewModel;
+namespace TiendaMVC.Controllers;
 
 public class PresupuestosController : Controller
 {
+    private readonly ILogger<ProductosController> _logger;
     private PresupuestosRepository _presupuestosRepository;
-    public PresupuestosController()
+    private readonly ProductosRepository _productosRepository;
+    public PresupuestosController(ILogger<ProductosController> logger)
     {
+        _logger = logger;
         _presupuestosRepository = new PresupuestosRepository();
+        _productosRepository = new ProductosRepository();
     }
     [HttpGet]
     public IActionResult Index()
     {
-        List<Presupuesto> presupuestos = _presupuestosRepository.ListarPresupuestos();
-        return View(presupuestos);
+        var presupuestos = _presupuestosRepository.GetAll();
+        var presupuestosViewModel = presupuestos.Select(p => new PresupuestoViewModel(p)).ToList();
+        return View(presupuestosViewModel);
 
     }
     [HttpGet]
-    public IActionResult Details(int idPresupuesto)
+    public IActionResult Details(int id)
     {
-        var presupuesto = _presupuestosRepository.DetallesPresupuestosID(idPresupuesto);
+        var presupuesto = _presupuestosRepository.DetallesPresupuestosID(id);
         if (presupuesto == null)
         {
-            // Si no se encuentra, devolvemos una página de error 404.
             return NotFound();
         }
         return View(presupuesto);
@@ -31,65 +38,97 @@ public class PresupuestosController : Controller
     [HttpGet]
     public IActionResult CrearPresupuesto()
     {
-        var Presupuesto = new Presupuesto();
-        return View(Presupuesto);
+        var presupuestoViewModel = new CrearPresupuestoViewModel();
+        return View(presupuestoViewModel);
     }
 
 
     [HttpPost]
-    public IActionResult CrearPresupuesto(Presupuesto Presupuesto)
+    public IActionResult CrearPresupuesto(CrearPresupuestoViewModel presupuestoViewModel)
     {
 
-        _presupuestosRepository.Crear(Presupuesto);
-        return RedirectToAction("Index");
-    }
-
-    [HttpGet]
-    public IActionResult EditarPresupuesto(int idPresupuesto)
-    {
-        var Presupuesto = _presupuestosRepository.DetallesPresupuestosID(idPresupuesto);
-        if (Presupuesto is null) RedirectToAction("Index");
-        return View(Presupuesto);
-    }
-
-
-    [HttpPost]
-    public IActionResult EditarPresupuesto(Presupuesto Presupuesto)
-    {
-        _presupuestosRepository.Modificar(Presupuesto);
-        return RedirectToAction("Index");
-
-    }
-
-    public IActionResult DeletePresupuesto(int idPresupuesto)
-    {
-        var Presupuesto = _presupuestosRepository.DetallesPresupuestosID(idPresupuesto);
-        if (Presupuesto != null)
+        if (!ModelState.IsValid)
         {
-            _presupuestosRepository.Eliminar(idPresupuesto);
+            return View(presupuestoViewModel);
         }
+        var presupuesto = new Presupuesto(presupuestoViewModel);
+        _presupuestosRepository.Crear(presupuesto);
         return RedirectToAction("Index");
     }
 
     [HttpGet]
-    public IActionResult AgregarProducto(int idPresupuesto)
+    public IActionResult EditarPresupuesto(int id)
     {
-        if (_presupuestosRepository.DetallesPresupuestosID(idPresupuesto) == null)
+        var presupuesto = _presupuestosRepository.DetallesPresupuestosID(id);
+        if (presupuesto is null)
         {
             return RedirectToAction("Index");
         }
-        // Pasamos el idPresupuesto a la vista usando ViewBag
-        //    para que el <form> pueda construir su URL de envío.
-        ViewBag.IdPresupuesto = idPresupuesto;
-        var detalle = new PresupuestosDetalle();
-        return View(detalle);
+        else
+        {
+            var editarPresupuestoViewModel = new EditarPresupuestoViewModel(presupuesto);
+
+            return View(editarPresupuestoViewModel);
+
+        }
     }
 
-    
+
     [HttpPost]
-    public IActionResult AgregarProducto(int idPresupuesto, PresupuestosDetalle detalle)
+    public IActionResult EditarPresupuesto(EditarPresupuestoViewModel editarPresupuestoViewModel)
     {
-        _presupuestosRepository.AgregarProducto(idPresupuesto, detalle);
-        return RedirectToAction("Details", new { idPresupuesto });
+        if (!ModelState.IsValid)
+        {
+            return View(editarPresupuestoViewModel);
+        }
+        var presupuesto = new Presupuesto(editarPresupuestoViewModel);
+        _presupuestosRepository.Modificar(presupuesto);
+        return RedirectToAction("Index");
+
+    }
+
+    public IActionResult DeletePresupuesto(int id)
+    {
+        var Presupuesto = _presupuestosRepository.DetallesPresupuestosID(id);
+        if (Presupuesto != null)
+        {
+            _presupuestosRepository.Eliminar(id);
+        }
+        return RedirectToAction("Index");
+    }
+
+    [HttpGet]
+    public IActionResult AgregarProducto(int id)
+    {
+        if (_presupuestosRepository.DetallesPresupuestosID(id) == null)
+        {
+            return RedirectToAction("Index");
+        }
+
+        var productos = _productosRepository.GetAll();
+        var ListaProductos = new SelectList(productos, "Id", "Descripcion");
+        var agregarProductoViewModel = new AgregarProductoViewModel(id,ListaProductos);
+        return View(agregarProductoViewModel);
+    }
+
+    [HttpPost]
+    public IActionResult AgregarProducto(AgregarProductoViewModel agregarProductoViewModel)
+    {
+        if (!ModelState.IsValid)
+        {
+            var todosLosProductos = _productosRepository.GetAll();
+            agregarProductoViewModel.ListaProductos = new SelectList(todosLosProductos, "Id", "Descripcion");
+            return View(agregarProductoViewModel);
+        }
+        var producto = _productosRepository.DetallesProductosID(agregarProductoViewModel.IdProducto);
+        if (producto==null)
+        {
+            var todosLosProductos = _productosRepository.GetAll();
+            agregarProductoViewModel.ListaProductos = new SelectList(todosLosProductos, "Id", "Descripcion");
+            return View(agregarProductoViewModel);
+        }
+        var detalle = new PresupuestosDetalle(producto,agregarProductoViewModel.Cantidad);
+        _presupuestosRepository.AgregarProducto(agregarProductoViewModel.IdPresupuesto, detalle);
+        return RedirectToAction("Details", new { id = agregarProductoViewModel.IdPresupuesto });
     }
 }

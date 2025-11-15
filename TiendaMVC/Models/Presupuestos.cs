@@ -1,19 +1,20 @@
-namespace  Tienda.Models;
+namespace TiendaMVC.Models;
 
+using TiendaMVC.ViewModel;
 public class Presupuesto
 {
-    const double IVA = 0.21;
-    private int idPresupuesto;
+    const decimal IVA = 0.21m;
+    private int id;
     private string? nombreDestinatario;
     private DateTime fechaCreacion;
     private List<PresupuestosDetalle>? detalle;
 
-    public int IdPresupuesto { get => idPresupuesto; set => idPresupuesto = value; }
+    public int Id { get => id; set => id = value; }
     public string? NombreDestinatario { get => nombreDestinatario; set => nombreDestinatario = value; }
     public DateTime FechaCreacion { get => fechaCreacion; set => fechaCreacion = value; }
     public List<PresupuestosDetalle>? Detalle { get => detalle; set => detalle = value; }
 
-    public Presupuesto(string? nombreDestinatario,DateTime fechaCreacion,List<PresupuestosDetalle>? detalle)
+    public Presupuesto(string? nombreDestinatario, DateTime fechaCreacion, List<PresupuestosDetalle>? detalle)
     {
         this.nombreDestinatario = nombreDestinatario;
         this.fechaCreacion = fechaCreacion;
@@ -23,28 +24,43 @@ public class Presupuesto
     {
         Detalle = new List<PresupuestosDetalle>();
     }
-
-    public double montoPresupuesto()
+    public Presupuesto(CrearPresupuestoViewModel presupuestoViewModel)
     {
-        double monto = 0;
+        nombreDestinatario = presupuestoViewModel.NombreDestinatario;
+        fechaCreacion = presupuestoViewModel.FechaCreacion;
+        detalle = presupuestoViewModel.Detalle;
+    }
+
+
+    public Presupuesto(EditarPresupuestoViewModel presupuestoViewModel)
+    {
+        id = presupuestoViewModel.Id;
+        nombreDestinatario = presupuestoViewModel.NombreDestinatario;
+        fechaCreacion = presupuestoViewModel.FechaCreacion;
+        detalle = presupuestoViewModel.Detalle;
+    }
+
+    public decimal montoPresupuesto()
+    {
+        decimal monto = 0;
         if (Detalle != null)
         {
             foreach (var item in Detalle)
             {
-                if (item.Producto!=null)
+                if (item.Producto != null)
                 {
-                    monto+=item.Producto.Precio;
+                    monto += item.Producto.Precio;
                 }
             }
         }
         return monto;
     }
-    
-        
 
-    public double MontoPresupuestoConIva()
+
+
+    public decimal MontoPresupuestoConIva()
     {
-        return montoPresupuesto()*(1+ IVA);
+        return montoPresupuesto() * (1 + IVA);
     }
     public int CantidadProducto()
     {

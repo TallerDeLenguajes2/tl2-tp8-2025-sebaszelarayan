@@ -121,3 +121,4 @@
 /mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/obj/Debug/net9.0/TiendaMVC.pdb
 /mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/obj/Debug/net9.0/TiendaMVC.genruntimeconfig.cache
 /mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/obj/Debug/net9.0/ref/TiendaMVC.dll
+/mnt/F67C2EFB7C2EB671/seba/Facultad/Taller 2/tl2-tp8-2025-sebaszelarayan/TiendaMVC/obj/Debug/net9.0/TiendaMVC.sourcelink.json

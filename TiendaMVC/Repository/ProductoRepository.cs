@@ -1,7 +1,6 @@
 using Microsoft.Data.Sqlite;
-using Tienda.Models;
-
-namespace Tienda.Repository;
+using TiendaMVC.Models;
+namespace TiendaMVC.Repository;
 
 public class ProductosRepository
 {
@@ -31,9 +30,9 @@ public class ProductosRepository
         {
             var producto = new Producto
             {
-                IdProducto = Convert.ToInt32(reader["idproducto"]),
+                Id = Convert.ToInt32(reader["idProducto"]),
                 Descripcion = reader["descripcion"].ToString(),
-                Precio = Convert.ToDouble(reader["precio"])
+                Precio = Convert.ToDecimal(reader["precio"])
             };
             _productos.Add(producto);
         }
@@ -44,12 +43,12 @@ public class ProductosRepository
     {
         Producto? producto = null;
 
-        string query = "SELECT * FROM Productos WHERE idProducto=@idproducto";
+        string query = "SELECT * FROM Productos WHERE idProducto=@id";
         var connection = new SqliteConnection(cadenaConnection);
         connection.Open();
 
         var command = new SqliteCommand(query, connection);
-        command.Parameters.AddWithValue("@idproducto", id);
+        command.Parameters.AddWithValue("@id", id);
 
 
         var reader = command.ExecuteReader();
@@ -57,9 +56,9 @@ public class ProductosRepository
         {
             producto = new Producto
             {
-                IdProducto = Convert.ToInt32(reader["idproducto"]),
+                Id = Convert.ToInt32(reader["idProducto"]),
                 Descripcion = reader["descripcion"].ToString(),
-                Precio = Convert.ToDouble(reader["precio"])
+                Precio = Convert.ToDecimal(reader["precio"])
             };
         }
         connection.Close();
@@ -75,7 +74,7 @@ public class ProductosRepository
 
         command.Parameters.Add(new SqliteParameter("@descripcion", producto.Descripcion));
         command.Parameters.Add(new SqliteParameter("@precio", producto.Precio));
-        command.Parameters.Add(new SqliteParameter("@id", producto.IdProducto));
+        command.Parameters.Add(new SqliteParameter("@id", producto.Id));
 
         command.ExecuteNonQuery();
         connection.Close();

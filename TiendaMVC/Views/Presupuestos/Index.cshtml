@@ -1,10 +1,11 @@
-@using Tienda.Models
-@model List<Presupuesto>
+@using TiendaMVC.ViewModel
+@model List<PresupuestoViewModel>
+@{
+    ViewData["Title"] = "Presupuestos";
+}
+<h2>@ViewData["Title"]</h2>
+<a class="btn btn-primary" asp-controller="Presupuestos" asp-action="CrearPresupuesto">Crear Presupuesto</a>
 
-<h2>Presupuesto List</h2>
-<button>
-<a class="btn btn-primary" asp-controller="Presupuestos" asp-action="CrearPresupuesto" >Crear Presupuesto</a>
-</button>
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -16,21 +17,24 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Presupuesto presupuesto in Model)
+        @foreach (var presupuesto in Model)
         {
             <tr>
-                <td hidden>@presupuesto.IdPresupuesto</td>
+                <td hidden>@presupuesto.Id</td>
                 <td>@presupuesto.NombreDestinatario</td>
                 <td>@presupuesto.FechaCreacion.ToShortDateString()</td>
                 <td class="text-center">
-                    <a asp-controller="Presupuestos" asp-action="Details" asp-route-idPresupuesto="@presupuesto.IdPresupuesto" class="btn btn-secondary">Ver Detalle</a>
+                    <a asp-controller="Presupuestos" asp-action="Details"
+                        asp-route-id="@presupuesto.Id" class="btn btn-secondary">Ver Detalle</a>
                 </td>
                 <td class="text-center">
-                    <a asp-controller="Presupuestos" asp-action="EditarPresupuesto" asp-route-idPresupuesto="@presupuesto.IdPresupuesto" class="btn btn-warning">Editar</a>
-                    <a asp-controller="Presupuestos" asp-action="DeletePresupuesto" asp-route-idPresupuesto="@presupuesto.IdPresupuesto" class="btn btn-danger">Eliminar</a>
-            </td>
+                    <a asp-controller="Presupuestos" asp-action="EditarPresupuesto"
+                        asp-route-id="@presupuesto.Id" class="btn btn-warning">Editar</a>
+                    <a asp-controller="Presupuestos" asp-action="DeletePresupuesto"
+                        asp-route-id="@presupuesto.Id" class="btn btn-danger">Eliminar</a>
+                </td>
             </tr>
-                
+
         }
     </tbody>
 </table>
