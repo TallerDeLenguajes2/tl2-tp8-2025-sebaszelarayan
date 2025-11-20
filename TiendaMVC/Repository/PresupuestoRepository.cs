@@ -1,8 +1,9 @@
 using TiendaMVC.Models;
 using Microsoft.Data.Sqlite;
+using TiendaMVC.Interface;
 namespace TiendaMVC.Repository;
 
-public class PresupuestosRepository
+public class PresupuestoRepository : IPresupuestoRepository
 {
     private string cadenaConnection = "Data source = Db/Tienda.db";
     private List<Presupuesto> _presupuestos = new List<Presupuesto>();

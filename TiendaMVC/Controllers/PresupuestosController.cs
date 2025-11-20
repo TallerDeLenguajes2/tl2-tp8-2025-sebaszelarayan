@@ -1,25 +1,31 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TiendaMVC.Models;
-using TiendaMVC.Repository;
+using TiendaMVC.Interface;
 using TiendaMVC.ViewModel;
 namespace TiendaMVC.Controllers;
 
 public class PresupuestosController : Controller
 {
     private readonly ILogger<ProductosController> _logger;
-    private PresupuestosRepository _presupuestosRepository;
-    private readonly ProductosRepository _productosRepository;
-    public PresupuestosController(ILogger<ProductosController> logger)
+    private readonly IPresupuestoRepository _presupuestoRepository;
+    private readonly IProductoRepository _productoRepository;
+
+    private readonly IAuthenticationService _authenticationService;
+
+
+    public PresupuestosController(ILogger<ProductosController> logger,IPresupuestoRepository presupuestoRepository,IProductoRepository productoRepository,IAuthenticationService authenticationService)
     {
         _logger = logger;
-        _presupuestosRepository = new PresupuestosRepository();
-        _productosRepository = new ProductosRepository();
+        _presupuestoRepository = presupuestoRepository;
+        _productoRepository = productoRepository;
+        _authenticationService =authenticationService;
+
     }
     [HttpGet]
     public IActionResult Index()
     {
-        var presupuestos = _presupuestosRepository.GetAll();
+        var presupuestos = _presupuestoRepository.GetAll();
         var presupuestosViewModel = presupuestos.Select(p => new PresupuestoViewModel(p)).ToList();
         return View(presupuestosViewModel);
 
@@ -27,7 +33,7 @@ public class PresupuestosController : Controller
     [HttpGet]
     public IActionResult Details(int id)
     {
-        var presupuesto = _presupuestosRepository.DetallesPresupuestosID(id);
+        var presupuesto = _presupuestoRepository.DetallesPresupuestosID(id);
         if (presupuesto == null)
         {
             return NotFound();
@@ -52,14 +58,14 @@ public class PresupuestosController : Controller
             return View(presupuestoViewModel);
         }
         var presupuesto = new Presupuesto(presupuestoViewModel);
-        _presupuestosRepository.Crear(presupuesto);
+        _presupuestoRepository.Crear(presupuesto);
         return RedirectToAction("Index");
     }
 
     [HttpGet]
     public IActionResult EditarPresupuesto(int id)
     {
-        var presupuesto = _presupuestosRepository.DetallesPresupuestosID(id);
+        var presupuesto = _presupuestoRepository.DetallesPresupuestosID(id);
         if (presupuesto is null)
         {
             return RedirectToAction("Index");
@@ -82,17 +88,17 @@ public class PresupuestosController : Controller
             return View(editarPresupuestoViewModel);
         }
         var presupuesto = new Presupuesto(editarPresupuestoViewModel);
-        _presupuestosRepository.Modificar(presupuesto);
+        _presupuestoRepository.Modificar(presupuesto);
         return RedirectToAction("Index");
 
     }
 
     public IActionResult DeletePresupuesto(int id)
     {
-        var Presupuesto = _presupuestosRepository.DetallesPresupuestosID(id);
+        var Presupuesto = _presupuestoRepository.DetallesPresupuestosID(id);
         if (Presupuesto != null)
         {
-            _presupuestosRepository.Eliminar(id);
+            _presupuestoRepository.Eliminar(id);
         }
         return RedirectToAction("Index");
     }
@@ -100,12 +106,12 @@ public class PresupuestosController : Controller
     [HttpGet]
     public IActionResult AgregarProducto(int id)
     {
-        if (_presupuestosRepository.DetallesPresupuestosID(id) == null)
+        if (_presupuestoRepository.DetallesPresupuestosID(id) == null)
         {
             return RedirectToAction("Index");
         }
 
-        var productos = _productosRepository.GetAll();
+        var productos = _productoRepository.GetAll();
         var ListaProductos = new SelectList(productos, "Id", "Descripcion");
         var agregarProductoViewModel = new AgregarProductoViewModel(id,ListaProductos);
         return View(agregarProductoViewModel);
@@ -116,19 +122,19 @@ public class PresupuestosController : Controller
     {
         if (!ModelState.IsValid)
         {
-            var todosLosProductos = _productosRepository.GetAll();
+            var todosLosProductos = _productoRepository.GetAll();
             agregarProductoViewModel.ListaProductos = new SelectList(todosLosProductos, "Id", "Descripcion");
             return View(agregarProductoViewModel);
         }
-        var producto = _productosRepository.DetallesProductosID(agregarProductoViewModel.IdProducto);
+        var producto = _productoRepository.DetallesProductosID(agregarProductoViewModel.IdProducto);
         if (producto==null)
         {
-            var todosLosProductos = _productosRepository.GetAll();
+            var todosLosProductos = _productoRepository.GetAll();
             agregarProductoViewModel.ListaProductos = new SelectList(todosLosProductos, "Id", "Descripcion");
             return View(agregarProductoViewModel);
         }
         var detalle = new PresupuestosDetalle(producto,agregarProductoViewModel.Cantidad);
-        _presupuestosRepository.AgregarProducto(agregarProductoViewModel.IdPresupuesto, detalle);
+        _presupuestoRepository.AgregarProducto(agregarProductoViewModel.IdPresupuesto, detalle);
         return RedirectToAction("Details", new { id = agregarProductoViewModel.IdPresupuesto });
     }
 }
