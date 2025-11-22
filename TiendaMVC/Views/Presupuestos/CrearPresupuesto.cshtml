@@ -1,27 +1,67 @@
 @using TiendaMVC.ViewModel
 @model CrearPresupuestoViewModel
 @{
-    ViewData["Title"] = "Crear Presupuesto";
+    ViewData["Title"] = "Crear Nuevo Presupuesto";
 }
-<h2>@ViewData["Title"]</h2>
-<form asp-controller="Presupuestos" asp-action="CrearPresupuesto" class="form-horizontal">
-    <div class="form-group">
-        <label asp-for="@Model.NombreDestinatario">Nombre del destinatario</label>
-        <input asp-for="@Model.NombreDestinatario" class="form-control" />
-        <span asp-validation-for="@Model.NombreDestinatario" class="text-danger"></span>
-    </div>
 
-    <div class="form-group">
-        <label asp-for="@Model.FechaCreacion">Fecha Creacion</label>
-        <input asp-for="@Model.FechaCreacion" class="form-control" />
-        <span asp-validation-for="@Model.FechaCreacion" class="text-danger"></span>
-    </div>
-    <div class="form-group mt-2">
-        <button type="submit" class="btn btn-primary">Crear</button>
-        <a asp-action="Index" class="btn btn-secondary">Volver</a>
-    </div>
-</form>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            
+            <div class="card shadow-lg border-0 rounded-3">
+                
+                <div class="card-header text-white text-center py-4" style="background: linear-gradient(to right, #0d6efd, #0a58ca);">
+                    <h3 class="mb-0 fw-bold">
+                        <i class="bi bi-file-earmark-plus-fill me-2"></i>Nuevo Presupuesto
+                    </h3>
+                    <small class="opacity-75">Ingrese los datos iniciales para comenzar</small>
+                </div>
 
+                <div class="card-body p-5">
+                    <form asp-controller="Presupuestos" asp-action="CrearPresupuesto" method="post">
+                        
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-3" role="alert"></div>
+
+                        <div class="mb-4">
+                            <label asp-for="NombreDestinatario" class="form-label fw-bold text-secondary">
+                                <i class="bi bi-person-vcard me-1"></i> Nombre del Destinatario
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0 text-primary"><i class="bi bi-person-fill"></i></span>
+                                <input asp-for="NombreDestinatario" class="form-control border-start-0" placeholder="Ej: Empresa S.A. o Juan Pérez" autofocus />
+                            </div>
+                            <span asp-validation-for="NombreDestinatario" class="text-danger small ps-1"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="FechaCreacion" class="form-label fw-bold text-secondary">
+                                <i class="bi bi-calendar-date me-1"></i> Fecha de Emisión
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0 text-primary"><i class="bi bi-calendar3"></i></span>
+                                <input asp-for="FechaCreacion" class="form-control border-start-0" type="date" />
+                            </div>
+                            <span asp-validation-for="FechaCreacion" class="text-danger small ps-1"></span>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                                <i class="bi bi-arrow-left me-1"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-success px-4 fw-bold shadow-sm">
+                                <i class="bi bi-check-lg me-1"></i> Crear Presupuesto
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

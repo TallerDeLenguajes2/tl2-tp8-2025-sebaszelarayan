@@ -15,7 +15,7 @@ builder.Services.AddSession(options =>
 // Registro de la Inyección de Dependencia (TODOS AddScoped)
 builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
 builder.Services.AddScoped<IPresupuestoRepository, PresupuestoRepository>();
-builder.Services.AddScoped<IUserRepository, UsuarioRepository>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 // Add services to the container.

@@ -5,6 +5,8 @@ public class Usuario
     private int id;
     private string? username;
     private string? password;
+    private string? nombre;
+    
     private string? rol;
     public Usuario()
     {
@@ -13,4 +15,5 @@ public class Usuario
     public string? Username { get => username; set => username = value; }
     public string? Password { get => password; set => password = value; }
     public string? Rol { get => rol; set => rol = value; }
+    public string? Nombre { get => nombre; set => nombre = value; }
 }

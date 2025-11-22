@@ -1,0 +1,93 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Inicio";
+    // Recuperamos el usuario y el rol de la sesión
+    var usuario = Accessor.HttpContext?.Session.GetString("User");
+    var rol = Accessor.HttpContext?.Session.GetString("Rol");
+    bool estaLogueado = !string.IsNullOrEmpty(usuario);
+}
+
+<div class="p-5 mb-4 bg-light rounded-3 shadow-sm">
+    <div class="container-fluid py-3">
+        @if (estaLogueado)
+        {
+            <h1 class="display-5 fw-bold text-primary"><i class="bi bi-person-circle"></i>  @usuario </h1>
+            <p class="col-md-8 fs-4">Bienvenido al panel de control de <strong>Tienda MVC</strong>.</p>
+            <p class="text-muted">Tu rol actual es: <span class="badge bg-info text-dark">@rol</span></p>
+        }
+        else
+        {
+            <h1 class="display-5 fw-bold text-primary">Bienvenido a Tienda MVC</h1>
+            <p class="col-md-8 fs-4">La solución integral para la gestión de productos y generación de presupuestos.</p>
+            <a asp-controller="Login" asp-action="Index" class="btn btn-primary btn-lg mt-3">Iniciar Sesión</a>
+        }
+    </div>
+</div>
+
+<div class="row align-items-stretch">
+    
+    <div class="col-md-6 mb-4">
+        <div class="card h-100 border-0 shadow-sm hover-effect">
+            <div class="card-body text-center p-5">
+                <div class="feature-icon bg-primary bg-gradient text-white rounded-3 mb-3 d-inline-flex p-3">
+                    <h2 class="m-0"><i class="bi bi-box-seam-fill me-1"></i> </h2>
+                </div>
+                <h2 class="card-title">Productos</h2>
+                <p class="card-text text-muted">
+                    Gestiona el inventario, actualiza precios y agrega nuevos artículos al sistema.
+                </p>
+                @if (estaLogueado)
+                {
+                    <a asp-controller="Productos" asp-action="Index" class="btn btn-outline-primary stretched-link">Ir a Productos</a>
+                }
+                else
+                {
+                    <span class="text-danger small">Requiere inicio de sesión</span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card h-100 border-0 shadow-sm hover-effect">
+            <div class="card-body text-center p-5">
+                <div class="feature-icon bg-success bg-gradient text-white rounded-3 mb-3 d-inline-flex p-3">
+                    <h2 class="m-0"><i class="bi bi-file-earmark-text-fill me-1"></i> </h2>
+                </div>
+                <h2 class="card-title">Presupuestos</h2>
+                <p class="card-text text-muted">
+                    Genera presupuestos para clientes, agrega items y calcula totales automáticamente.
+                </p>
+                @if (estaLogueado)
+                {
+                    <a asp-controller="Presupuestos" asp-action="Index" class="btn btn-outline-success stretched-link">Ir a Presupuestos</a>
+                }
+                else
+                {
+                    <span class="text-danger small">Requiere inicio de sesión</span>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12 text-center text-muted">
+        <hr />
+        <p class="small">
+            Sistema desarrollado para <strong>Taller de Lenguajes II</strong> - 2025.
+            <br />
+            Estado del sistema: <span class="text-success">🟢 Operativo</span>
+        </p>
+    </div>
+</div>
+
+<style>
+    .hover-effect {
+        transition: transform 0.2s;
+    }
+    .hover-effect:hover {
+        transform: translateY(-5px);
+    }
+</style>

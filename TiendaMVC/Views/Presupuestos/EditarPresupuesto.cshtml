@@ -3,34 +3,64 @@
 @{
     ViewData["Title"] = "Editar Presupuesto";
 }
-<h2>@ViewData["Title"]</h2>
 
-<form asp-action="EditarPresupuesto" method="post" class="form-horizontal">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            
+            <div class="card shadow-lg border-0 rounded-3">
+                
+                <div class="card-header text-white text-center py-4" style="background: linear-gradient(to right, #0d6efd, #0a58ca);">
+                    <h3 class="mb-0 fw-bold">
+                        <i class="bi bi-pencil-square me-2"></i>Editar Presupuesto
+                    </h3>
+                </div>
 
-    <div class="form-group" hidden>
-        <label asp-for="@Model.Id" class="control-label"></label>
-        <input asp-for="@Model.Id" class="form-control" />
-        <span asp-validation-for="@Model.Id" class="text-danger"></span>
+                <div class="card-body p-5">
+                    <form asp-action="EditarPresupuesto" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-3" role="alert"></div>
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="mb-4">
+                            <label asp-for="NombreDestinatario" class="form-label fw-bold text-secondary">
+                                <i class="bi bi-person-vcard me-1"></i> Destinatario
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-person"></i></span>
+                                <input asp-for="NombreDestinatario" class="form-control border-start-0" placeholder="Ej: Juan Pérez" />
+                            </div>
+                            <span asp-validation-for="NombreDestinatario" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="FechaCreacion" class="form-label fw-bold text-secondary">
+                                <i class="bi bi-calendar-event me-1"></i> Fecha de Creación
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-calendar3"></i></span>
+                                <input asp-for="FechaCreacion" class="form-control border-start-0" type="date" />
+                            </div>
+                            <span asp-validation-for="FechaCreacion" class="text-danger small"></span>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                                <i class="bi bi-arrow-left me-1"></i> Volver
+                            </a>
+                            <button type="submit" class="btn btn-primary px-4 fw-bold shadow-sm">
+                                <i class="bi bi-check-lg me-1"></i> Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
     </div>
-
-    <div class="form-group">
-        <label asp-for="@Model.NombreDestinatario">Nombre del destinatario</label>
-        <input asp-for="@Model.NombreDestinatario" class="form-control" />
-        <span asp-validation-for="@Model.NombreDestinatario" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="@Model.FechaCreacion">Fecha Creacion</label>
-        <input asp-for="@Model.FechaCreacion" class="form-control" />
-        <span asp-validation-for="@Model.FechaCreacion" class="text-danger"></span>
-    </div>
-
-    <div class="form-group mt-2">
-        <button type="submit" class="btn btn-primary">Editar</button>
-        <a asp-action="Index" class="btn btn-secondary">Volver</a>
-    </div>
-</form>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

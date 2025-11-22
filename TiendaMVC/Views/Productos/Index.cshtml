@@ -1,37 +1,90 @@
 @using TiendaMVC.ViewModel
-
 @model List<ProductoViewModel>
+@using Microsoft.AspNetCore.Http
 
 @{
     ViewData["Title"] = "Productos";
+
 }
-<h2>@ViewData["Title"]</h2>
 
-<a class="btn btn-primary" asp-controller="Productos" asp-action="CrearProducto">Crear Producto</a>
+<div class="container py-4">
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th hidden>ID</th>
-            <th>Descripcion</th>
-            <th>Precio</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var producto in Model)
-        {
-            <tr>
-                <td hidden>@producto.Id</td>
-                <td>@producto.Descripcion</td>
-                <td>$@producto.Precio</td>
-                <td class="text-center">
-                    <a asp-controller="Productos" asp-action="EditarProducto" asp-route-id="@producto.Id"
-                        class="btn btn-warning">Editar</a>
-                    <a asp-controller="Productos" asp-action="DeleteProducto" asp-route-id="@producto.Id"
-                        class="btn btn-danger">Eliminar</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-primary">
+            <i class="bi bi-box-seam-fill me-2"></i>@ViewData["Title"]
+        </h2>
+
+
+        <a class="btn btn-success shadow-sm" asp-controller="Productos" asp-action="CrearProducto">
+            <i class="bi bi-plus-lg me-1"></i> Nuevo Producto
+        </a>
+
+    </div>
+
+    <div class="card shadow border-0 rounded-3 overflow-hidden">
+        <div class="card-body p-0">
+            <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="bg-light text-secondary">
+                    <tr>
+                        <th hidden>ID</th>
+                        <th class="ps-4" style="width: 60%;">Descripción</th>
+                        <th class="text-end pe-4">Precio</th>
+
+
+                        <th class="text-center" style="width: 150px;">Acciones</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="" class="text-center py-5 text-muted">
+                                <i class="bi bi-boxes fs-1 d-block mb-2"></i>
+                                No hay productos registrados en el sistema.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var producto in Model)
+                        {
+                            <tr>
+                                <td hidden>@producto.Id</td>
+                                <td class="ps-4 fw-bold text-dark">
+                                    @producto.Descripcion
+                                </td>
+                                <td class="text-end pe-4">
+                                    <span class="badge bg-light text-success border border-success fs-6">
+                                        @producto.Precio.ToString("C")
+                                    </span>
+                                </td>
+
+
+                                <td class="text-center">
+                                    <div class="btn-group" role="group">
+                                        <a asp-controller="Productos" asp-action="EditarProducto" asp-route-id="@producto.Id"
+                                            class="btn btn-sm btn-outline-warning" title="Editar">
+                                            <i class="bi bi-pencil-square"></i> Editar
+                                        </a>
+
+                                        <a asp-controller="Productos" asp-action="DeleteProducto" asp-route-id="@producto.Id"
+                                            class="btn btn-sm btn-outline-danger" title="Eliminar"
+                                            onclick="return confirm('¿Está seguro de eliminar el producto: @producto.Descripcion?');">
+                                            <i class="bi bi-trash-fill"></i> Eliminar
+                                        </a>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-footer bg-white py-3">
+            <small class="text-muted">Total de productos listados: <strong>@Model.Count</strong></small>
+        </div>
+    </div>
+</div>

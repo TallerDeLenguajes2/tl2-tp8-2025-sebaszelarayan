@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "Acceso Denegado";
+}
+
+<div class="container mt-5 text-center">
+    <div class="card shadow border-danger">
+        <div class="card-header bg-danger text-white">
+            <h3>⛔ Acceso Restringido</h3>
+        </div>
+        <div class="card-body">
+            <h4 class="card-title text-danger">No tienes permisos para ver esta página.</h4>
+            <p class="card-text">
+                Esta sección es exclusiva para usuarios con perfil de <strong>Administrador</strong>.
+                Tu usuario actual tiene perfil de <strong>Cliente</strong>.
+            </p>
+            <hr />
+            <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
+                Volver al Inicio
+            </a>
+            <a asp-controller="Login" asp-action="Logout" class="btn btn-outline-secondary">
+                Cerrar Sesión
+            </a>
+        </div>
+    </div>
+</div>

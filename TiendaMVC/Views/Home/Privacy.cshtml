@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "Política de Privacidad";
+}
+
+<div class="container py-5">
+    <div class="card shadow border-0 rounded-3">
+        <div class="card-header p-4 text-white" style="background: linear-gradient(to right, #0d6efd, #0a58ca);">
+            <h1 class="h3 mb-0">
+                <i class="bi bi-shield-lock-fill me-2"></i> @ViewData["Title"]
+            </h1>
+        </div>
+
+        <div class="card-body p-5">
+            <p class="lead text-muted">
+                En <strong>Tienda MVC</strong>, valoramos tu confianza y nos comprometemos a proteger tu información personal.
+                Esta política detalla cómo gestionamos los datos dentro de nuestra plataforma.
+            </p>
+            <hr class="my-4">
+
+            <div class="mb-4">
+                <h4 class="text-primary fw-bold">
+                    <i class="bi bi-person-vcard me-2"></i>1. Información que recopilamos
+                </h4>
+                <p>Recopilamos información necesaria para la gestión de presupuestos y productos, incluyendo:</p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item border-0 ps-0"><i class="bi bi-check-circle-fill text-success me-2"></i>Nombres de usuario y roles.</li>
+                    <li class="list-group-item border-0 ps-0"><i class="bi bi-check-circle-fill text-success me-2"></i>Datos de productos cargados en el sistema.</li>
+                    <li class="list-group-item border-0 ps-0"><i class="bi bi-check-circle-fill text-success me-2"></i>Historial de presupuestos generados.</li>
+                </ul>
+            </div>
+
+            <div class="mb-4">
+                <h4 class="text-primary fw-bold">
+                    <i class="bi bi-database-lock me-2"></i>2. Seguridad de los datos
+                </h4>
+                <p>
+                    Implementamos medidas de seguridad diseñadas para proteger tus datos contra el acceso no autorizado. 
+                    Utilizamos autenticación basada en sesiones y roles para asegurar que solo el personal autorizado (Administradores) 
+                    pueda modificar la información sensible.
+                </p>
+            </div>
+
+            <div class="mb-4">
+                <h4 class="text-primary fw-bold">
+                    <i class="bi bi-cookie me-2"></i>3. Uso de Cookies
+                </h4>
+                <p>
+                    Este sitio utiliza cookies de sesión esenciales para mantener tu usuario logueado mientras navegas. 
+                    No utilizamos cookies de rastreo de terceros ni fines publicitarios.
+                </p>
+            </div>
+
+            <div class="alert alert-light border mt-5 d-flex align-items-center" role="alert">
+                <i class="bi bi-envelope-at fs-2 text-primary me-3"></i>
+                <div>
+                    <strong>¿Tenés dudas?</strong><br>
+                    Contactanos en <a href="mailto:privacidad@tiendamvc.com" class="text-decoration-none fw-bold">privacidad@tiendamvc.com</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer text-center text-muted py-3 bg-light">
+            <small>Última actualización: @DateTime.Now.ToString("MMMM yyyy")</small>
+        </div>
+    </div>
+</div>

@@ -1,34 +1,72 @@
 @using TiendaMVC.ViewModel
 @model AgregarProductoViewModel
 @{
-    ViewData["Title"] = "Crear Presupuesto";
+    ViewData["Title"] = "Agregar Producto";
 }
-<h2>@ViewData["Title"]</h2>
 
-<hr />
-<form asp-action="AgregarProducto" asp-controller="Presupuestos" method="post">
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            
+            <div class="card shadow-lg border-0 rounded-3">
+                
+                <div class="card-header text-white text-center py-4" style="background: linear-gradient(to right, #0d6efd, #0a58ca);">
+                    <h3 class="mb-0 fw-bold">
+                        <i class="bi bi-cart-plus-fill me-2"></i>Agregar
+                    </h3>
+                    <small class="opacity-75">Seleccione un producto y la cantidad deseada</small>
+                </div>
 
-<input type="hidden" asp-for="IdPresupuesto" />
-    <div class="form-group">
-        <label asp-for="@Model.IdProducto" class="control-label"></label>
-        <select asp-for="@Model.IdProducto" asp-items="@Model.ListaProductos" class="form-control">
-            <option value="">-- Seleccione un Producto --</option>
-        </select>
-        <span asp-validation-for="@Model.IdProducto" class="text-danger"></span>
+                <div class="card-body p-5">
+                    <form asp-action="AgregarProducto" asp-controller="Presupuestos" method="post">
+                        
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-3" role="alert"></div>
+
+                        <input type="hidden" asp-for="IdPresupuesto" />
+
+                        <div class="mb-4">
+                            <label asp-for="IdProducto" class="form-label fw-bold text-secondary">
+                                <i class="bi bi-box-seam me-1"></i> Seleccionar Producto
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0 text-primary"><i class="bi bi-search"></i></span>
+                                <select asp-for="IdProducto" asp-items="@Model.ListaProductos" class="form-select border-start-0" autofocus>
+                                    <option value="" selected disabled>-- Haga clic para elegir --</option>
+                                </select>
+                            </div>
+                            <span asp-validation-for="IdProducto" class="text-danger small ps-1"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Cantidad" class="form-label fw-bold text-secondary">
+                                <i class="bi bi-123 me-1"></i> Cantidad
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0 text-primary"><i class="bi bi-plus-slash-minus"></i></span>
+                                <input asp-for="Cantidad" class="form-control border-start-0" type="number" min="1" placeholder="Ej: 1" />
+                            </div>
+                            <span asp-validation-for="Cantidad" class="text-danger small ps-1"></span>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a asp-action="Details" asp-route-id="@Model.IdPresupuesto" class="btn btn-outline-secondary px-4">
+                                <i class="bi bi-arrow-left me-1"></i> Volver
+                            </a>
+                            
+                            <button type="submit" class="btn btn-primary px-4 fw-bold shadow-sm">
+                                <i class="bi bi-plus-lg me-1"></i> Agregar al Presupuesto
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
     </div>
-
-    <div class="form-group">
-        <label asp-for="@Model.Cantidad" class="control-label"></label>
-        <input asp-for="@Model.Cantidad" class="form-control" type="number" />
-        <span asp-validation-for="@Model.Cantidad" class="text-danger"></span>
-    </div>
-
-    <br />
-    <div class="form-group mt-2">
-        <button type="submit" class="btn btn-primary">Agregar</button>
-        <a asp-action="Details" asp-route-id="@Model.IdPresupuesto" class="btn btn-secondary">Volver</a>
-    </div>
-</form>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

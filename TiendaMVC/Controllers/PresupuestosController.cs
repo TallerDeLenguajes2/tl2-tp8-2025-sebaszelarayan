@@ -22,9 +22,46 @@ public class PresupuestosController : Controller
         _authenticationService =authenticationService;
 
     }
+    // --- MÉTODOS AUXILIARES DE SEGURIDAD ---
+
+    // 1. Permiso estricto (Solo Admin): Para Modificaciones
+    private IActionResult? CheckAdminPermissions()
+    {
+        if (!_authenticationService.IsAutenticated())
+        {
+            return RedirectToAction("Index", "Login");
+        }
+        if (!_authenticationService.HasAccessLevel("Administrador"))
+        {
+            return RedirectToAction(nameof(AccesoDenegado));
+        }
+        return null; // Permiso concedido
+    }
+    // 2. Permiso amplio (Admin o Cliente): Para Lectura
+    private IActionResult? CheckReadPermissions()
+    {
+        if (!_authenticationService.IsAutenticated())
+        {
+            return RedirectToAction("Index", "Login");
+        }
+        // Si NO es Admin Y TAMPOCO es Cliente -> Acceso Denegado
+        if (!_authenticationService.HasAccessLevel("Administrador") && 
+            !_authenticationService.HasAccessLevel("Cliente"))
+        {
+            return RedirectToAction(nameof(AccesoDenegado));
+        }
+        return null; // Permiso concedido
+    }
+
+    // --- ACCIONES DE LECTURA (Index, Details) ---
+
     [HttpGet]
     public IActionResult Index()
     {
+        // Seguridad: Admin o Cliente
+        var securityCheck = CheckReadPermissions();
+        if (securityCheck != null) return securityCheck;
+
         var presupuestos = _presupuestoRepository.GetAll();
         var presupuestosViewModel = presupuestos.Select(p => new PresupuestoViewModel(p)).ToList();
         return View(presupuestosViewModel);
@@ -33,6 +70,10 @@ public class PresupuestosController : Controller
     [HttpGet]
     public IActionResult Details(int id)
     {
+        // Seguridad: Admin o Cliente
+        var securityCheck = CheckReadPermissions();
+        if (securityCheck != null) return securityCheck;
+
         var presupuesto = _presupuestoRepository.DetallesPresupuestosID(id);
         if (presupuesto == null)
         {
@@ -41,9 +82,15 @@ public class PresupuestosController : Controller
         return View(presupuesto);
 
     }
+    // --- ACCIONES DE ESCRITURA (Crear, Editar, Borrar, Agregar) ---
+
     [HttpGet]
     public IActionResult CrearPresupuesto()
     {
+        // Seguridad: Solo Admin
+        var securityCheck = CheckAdminPermissions();
+        if (securityCheck != null) return securityCheck;
+
         var presupuestoViewModel = new CrearPresupuestoViewModel();
         return View(presupuestoViewModel);
     }
@@ -52,6 +99,9 @@ public class PresupuestosController : Controller
     [HttpPost]
     public IActionResult CrearPresupuesto(CrearPresupuestoViewModel presupuestoViewModel)
     {
+        // Seguridad: Solo Admin
+        var securityCheck = CheckAdminPermissions();
+        if (securityCheck != null) return securityCheck;
 
         if (!ModelState.IsValid)
         {
@@ -65,6 +115,10 @@ public class PresupuestosController : Controller
     [HttpGet]
     public IActionResult EditarPresupuesto(int id)
     {
+        // Seguridad: Solo Admin
+        var securityCheck = CheckAdminPermissions();
+        if (securityCheck != null) return securityCheck;
+
         var presupuesto = _presupuestoRepository.DetallesPresupuestosID(id);
         if (presupuesto is null)
         {
@@ -83,6 +137,10 @@ public class PresupuestosController : Controller
     [HttpPost]
     public IActionResult EditarPresupuesto(EditarPresupuestoViewModel editarPresupuestoViewModel)
     {
+        // Seguridad: Solo Admin
+        var securityCheck = CheckAdminPermissions();
+        if (securityCheck != null) return securityCheck;
+
         if (!ModelState.IsValid)
         {
             return View(editarPresupuestoViewModel);
@@ -95,6 +153,10 @@ public class PresupuestosController : Controller
 
     public IActionResult DeletePresupuesto(int id)
     {
+        // Seguridad: Solo Admin
+        var securityCheck = CheckAdminPermissions();
+        if (securityCheck != null) return securityCheck;
+
         var Presupuesto = _presupuestoRepository.DetallesPresupuestosID(id);
         if (Presupuesto != null)
         {
@@ -106,6 +168,10 @@ public class PresupuestosController : Controller
     [HttpGet]
     public IActionResult AgregarProducto(int id)
     {
+        // Seguridad: Solo Admin
+        var securityCheck = CheckAdminPermissions();
+        if (securityCheck != null) return securityCheck;
+
         if (_presupuestoRepository.DetallesPresupuestosID(id) == null)
         {
             return RedirectToAction("Index");
@@ -120,6 +186,10 @@ public class PresupuestosController : Controller
     [HttpPost]
     public IActionResult AgregarProducto(AgregarProductoViewModel agregarProductoViewModel)
     {
+        // Seguridad: Solo Admin
+        var securityCheck = CheckAdminPermissions();
+        if (securityCheck != null) return securityCheck;
+        
         if (!ModelState.IsValid)
         {
             var todosLosProductos = _productoRepository.GetAll();
@@ -136,5 +206,10 @@ public class PresupuestosController : Controller
         var detalle = new PresupuestosDetalle(producto,agregarProductoViewModel.Cantidad);
         _presupuestoRepository.AgregarProducto(agregarProductoViewModel.IdPresupuesto, detalle);
         return RedirectToAction("Details", new { id = agregarProductoViewModel.IdPresupuesto });
+    }
+    [HttpGet]
+    public IActionResult AccesoDenegado()
+    {
+        return View();
     }
 }

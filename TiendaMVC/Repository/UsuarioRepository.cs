@@ -3,7 +3,7 @@ using TiendaMVC.Interface;
 using TiendaMVC.Models;
 namespace TiendaMVC.Repository;
 
-public class UsuarioRepository : IUserRepository
+public class UsuarioRepository : IUsuarioRepository
 {
     private string cadenaConnection = "Data source = Db/Tienda.db";
 
@@ -11,7 +11,7 @@ public class UsuarioRepository : IUserRepository
     {
         Usuario? usuario = null;
 
-        string query = "SELECT Id, Nombre, User, Pass, Rol FROM Usuarios WHERE User=@username AND Pass=@password " ;
+        string query = "SELECT Id, Nombre, User, Pass, Rol FROM Usuarios WHERE User=@username AND Pass=@password ";
         var connection = new SqliteConnection(cadenaConnection);
         connection.Open();
 
@@ -26,7 +26,8 @@ public class UsuarioRepository : IUserRepository
             {
                 //terminar la lectura
                 Id = Convert.ToInt32(reader["Id"]),
-                Username= reader["User"].ToString(),
+                Nombre = reader["Nombre"].ToString(),
+                Username = reader["User"].ToString(),
                 Password = reader["Pass"].ToString(),
                 Rol = reader["Rol"].ToString()
             };
